@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "9780916c-fa25-4853-9f2f-214e7abe96ab",
+		"name": "auto_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5c540462-18f6-4e49-894b-7303224530d8",
+						"exec": [
+							"var state = responseCode.code; //get the status code\r",
+							"var number = state.toString().substr(0, 1); //Convert the returned number type to string type and get the first place\r",
+							"console.log(number);\r",
+							"\r",
+							"switch (number) {\r",
+							"  case \"2\":\r",
+							"    test();\r",
+							"    break;\r",
+							"  case \"4\":\r",
+							"    clientQue(); //4 Beginning status, simply defined as client problem\r",
+							"    break;\r",
+							"  case \"5\":\r",
+							"    serverQue(); //The state at the beginning of 5 is simply defined as a server problem\r",
+							"    break;\r",
+							"  default:\r",
+							"    tests[\"Test failed,state=\" + state] = false; //If anything else happens, the  status will be printed and not pass the test\r",
+							"    break;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Body is JSON\", function() {\r",
+							"  pm.response.to.be.ok;\r",
+							"  pm.response.to.be.withBody;\r",
+							"  pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"function test() {\r",
+							"  var jsonData = JSON.parse(responseBody);\r",
+							"//   console.log(jsonData);\r",
+							"  switch (jsonData) {\r",
+							"    case jsonData:\r",
+							"      dataset();\r",
+							"      break;\r",
+							"\r",
+							"      function dataset() {\r",
+							"        var name = data.name;\r",
+							"        var age = data.age;\r",
+							"        console.log(name);\r",
+							"        console.log(age);\r",
+							"        if (\r",
+							"          pm.expect(jsonData.json.name).to.eql(name) &&\r",
+							"          pm.expect(jsonData.json.age).to.eql(age) \r",
+							"        ) {\r",
+							"          tests[\r",
+							"            \"name displayed as \" + name + \"  in the response\" + \"  Test passed\"\r",
+							"          ] = true;\r",
+							"          tests[\r",
+							"            \"age displayed as \" +\r",
+							"              age +\r",
+							"              \"  in the response\" +\r",
+							"              \"  Test passed\"\r",
+							"          ] = true;\r",
+							"                  }\r",
+							"      }\r",
+							"      break;\r",
+							"\r",
+							"    default:\r",
+							"      tests[\"Test failed,state=\" + state] = false; //If anything else happens, the  status will be printed and not pass the test\r",
+							"      break;\r",
+							"  }\r",
+							"}\r",
+							"\r",
+							"//Client problem\r",
+							"function clientQue() {\r",
+							"  tests[\r",
+							"    \"Client problem (request parameter or mode error) - - test failure - - - status code is\" +\r",
+							"      state +\r",
+							"      \"   requestURl\" +\r",
+							"      request.url\r",
+							"  ] = false;\r",
+							"}\r",
+							"\r",
+							"//Server or Gateway Problem\r",
+							"function serverQue() {\r",
+							"  tests[\r",
+							"    \"Server or Gateway Problem - Test Failure - Status Code is\" +\r",
+							"      state +\r",
+							"      \"   requestURl is\" +\r",
+							"      request.url\r",
+							"  ] = false;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"name\": \"Ragu\",\r\n     \"age\": 1\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{test_url}}/post",
+					"host": [
+						"{{test_url}}"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b24615d2-813c-48d0-8b5f-a52c6600d2fa",
+						"exec": [
+							"var state = responseCode.code; //get the status code\r",
+							"var number = state.toString().substr(0, 1); //Convert the returned number type to string type and get the first place\r",
+							"console.log(number);\r",
+							"\r",
+							"switch (number) {\r",
+							"  case \"2\":\r",
+							"    test();\r",
+							"    break;\r",
+							"  case \"4\":\r",
+							"    clientQue(); //4 Beginning status, simply defined as client problem\r",
+							"    break;\r",
+							"  case \"5\":\r",
+							"    serverQue(); //The state at the beginning of 5 is simply defined as a server problem\r",
+							"    break;\r",
+							"  default:\r",
+							"    tests[\"Test failed,state=\" + state] = false; //If anything else happens, the  status will be printed and not pass the test\r",
+							"    break;\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Body is JSON\", function() {\r",
+							"  pm.response.to.be.ok;\r",
+							"  pm.response.to.be.withBody;\r",
+							"  pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"function test() {\r",
+							"  var jsonData = JSON.parse(responseBody);\r",
+							"//   console.log(jsonData);\r",
+							"  switch (jsonData) {\r",
+							"    case jsonData:\r",
+							"      dataset();\r",
+							"      break;\r",
+							"\r",
+							"      function dataset() {\r",
+							"        var url = data.url;\r",
+							"        console.log(url);\r",
+							"        if (\r",
+							"          pm.expect(jsonData.url).to.eql(url) \r",
+							"        ) {\r",
+							"          tests[\r",
+							"            \"name displayed as \" + url + \"  in the response\" + \"  Test passed\"\r",
+							"          ] = true;\r",
+							"         \r",
+							"        }\r",
+							"      }\r",
+							"      break;\r",
+							"\r",
+							"    default:\r",
+							"      tests[\"Test failed,state=\" + state] = false; //If anything else happens, the  status will be printed and not pass the test\r",
+							"      break;\r",
+							"  }\r",
+							"}\r",
+							"\r",
+							"//Client problem\r",
+							"function clientQue() {\r",
+							"  tests[\r",
+							"    \"Client problem (request parameter or mode error) - - test failure - - - status code is\" +\r",
+							"      state +\r",
+							"      \"   requestURl\" +\r",
+							"      request.url\r",
+							"  ] = false;\r",
+							"}\r",
+							"\r",
+							"//Server or Gateway Problem\r",
+							"function serverQue() {\r",
+							"  tests[\r",
+							"    \"Server or Gateway Problem - Test Failure - Status Code is\" +\r",
+							"      state +\r",
+							"      \"   requestURl is\" +\r",
+							"      request.url\r",
+							"  ] = false;\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{test_url}}/get",
+					"host": [
+						"{{test_url}}"
+					],
+					"path": [
+						"get"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

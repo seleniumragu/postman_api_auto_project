@@ -1,0 +1,24 @@
+#!groovy
+
+def label = "worker-${UUID.randomUUID().toString()}"
+def col = "collections/auto_api.postman_collection.json"
+def env = "collections/postman_test.postman_environment.json"
+def csvfile = "collections/auto_api_postman.csv"
+
+podTemplate(label: label, 
+	containers: 
+	[
+    		containerTemplate(name: 'newman', image: 'postman/newman:alpine', privileged: false, command: 'cat', ttyEnabled: true)
+    ]
+	){
+    node(label) {
+        stage('Checkout SCM') {
+                checkout scm
+        }
+        stage('Integration Test') {
+            container('newman') {
+                sh "newman run ${col} -e ${env} -d ${csvfile}"
+            }
+        }
+    }
+}
